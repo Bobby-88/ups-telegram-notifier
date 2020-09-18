@@ -1,7 +1,8 @@
 #!/bin/bash
-echo please input telegram token>
+
+echo "please input telegram token>"
 read tg_token
-echo please input telegram chat id>
+echo "please input telegram chat id>"
 read tg_chat_id
 echo TELEGRAM_TOKEN="${tg_token}" > /etc/telegram.sh.conf
 echo TELEGRAM_CHAT="${tg_chat_id}" >> /etc/telegram.sh.conf
