@@ -15,5 +15,8 @@ chmod +x telegram.sh
 curl -o power-down-tg.sh -fsSL https://raw.githubusercontent.com/Bobby-88/shell-tg-notifier/master/power-down-tg.sh
 sed -i "s/\[UPS_NAME\]/${ups_name}/g" power-down-tg.sh
 chmod +x power-down-tg.sh
+curl -o power-up-tg.sh -fsSL https://raw.githubusercontent.com/Bobby-88/shell-tg-notifier/master/power-up-tg.sh
+sed -i "s/\[UPS_NAME\]/${ups_name}/g" power-up-tg.sh
+chmod +x power-up-tg.sh
 curl -o bypass-on-tg.sh -fsSL https://raw.githubusercontent.com/Bobby-88/shell-tg-notifier/master/bypass-on-tg.sh
 chmod +x bypass-on-tg.sh
