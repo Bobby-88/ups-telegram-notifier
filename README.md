@@ -16,18 +16,18 @@ To install, please use:
 
 Currently, the following events are supported:
 
-onbattery)
-echo "Power failure on UPS ${2}. Running on batteries." | ${WALL}
+1. onbattery
+	echo "Power failure on UPS ${2}. Running on batteries." | ${WALL}
 
-offbattery)
-echo "Power has returned on UPS ${2}..." | ${WALL}
-wall "Mains power returned to UPS ${2}"
+2. offbattery)
+	echo "Power has returned on UPS ${2}..." | ${WALL}
+	wall "Mains power returned to UPS ${2}"
 
-commfailure
-echo "Warning communications lost with UPS ${2}" | ${WALL}
+3. commfailure
+	echo "Warning communications lost with UPS ${2}" | ${WALL}
 
-commok
-echo "Communications restored with UPS ${2}" | ${WALL}
+4. commok
+	echo "Communications restored with UPS ${2}" | ${WALL}
 
 
 
