@@ -13,7 +13,7 @@ Currently, this tool supports integration with:
 #### Currently, the following events are supported:
 
 ##### 1. ONBATTERY
-	This event occurs on a power outage on the main line, where UPS is coneected to
+	This event occurs on a power outage on the main line, where UPS is connected to
 
 ##### 2. OFFBATTERY
 	This happens after ONBATTERY, when the mains return to normal condition
