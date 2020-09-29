@@ -1,15 +1,15 @@
 #!/bin/bash
 
-echo "please input telegram token"
+echo "please input telegram token, e.g. 123456:AbcDefGhi_JlkMno"
 read tg_token
-echo "please input telegram chat id"
+echo "please input telegram chat id, e.g. -12345678"
 read tg_chat_id
 echo TELEGRAM_TOKEN="${tg_token}" > /etc/telegram.sh.conf
 echo TELEGRAM_CHAT="${tg_chat_id}" >> /etc/telegram.sh.conf
 echo "please input the UPS name"
 read ups_name
-mkdir -p /opt/tg-notifier
-cd /opt/tg-notifier
+mkdir -p /opt/ups-telegram-notifier
+cd /opt/ups-telegram-notifier
 #iterate throught needed files --> download and postprocess them
 for fn in power-down-tg.sh power-up-tg.sh bypass-on-tg.sh
 do
@@ -26,3 +26,14 @@ chmod +x telegram.sh
 #chmod +x power-up-tg.sh
 #curl -o bypass-on-tg.sh -fsSL https://raw.githubusercontent.com/Bobby-88/ups-telegram-notifier/master/bypass-on-tg.sh
 #chmod +x bypass-on-tg.sh
+#config file
+PCNSSETTINGSFILE=/opt/APC/PowerChute/group1/pcnsconfig.ini
+BAKFILE=/opt/APC/PowerChute/group1/pcnsconfig.bak
+if [[ -f "$PCNSSETTINGSFILE" ]]; then
+    echo "$PCNSSETTINGSFILE exists."
+    cp "${PCNSSETTINGSFILE}" "${BAKFILE}"
+    sed -ir "s/^[#]*\s*event_PowerFailed_commandFilePath\ =\ .*/event_PowerFailed_commandFilePath\ =\ \/opt\/ups-telegram-notifier\/power-down-tg.sh" "${PCNSSETTINGSFILE}"
+fi
+
+echo "Installation done"
+
