@@ -52,5 +52,5 @@ Currently, this tool supports integration with:
 # Installation
 To install, please use:
 
-```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Bobby-88/shell-tg-notifier/master/install.sh)"```
+```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Bobby-88/ups-telegram-notifier/master/install.sh)"```
 
