@@ -30,7 +30,7 @@ chmod +x telegram.sh
 PCNSSETTINGSFILE=/opt/APC/PowerChute/group1/pcnsconfig.ini
 BAKFILE=/opt/APC/PowerChute/group1/pcnsconfig.bak
 if [[ -f "$PCNSSETTINGSFILE" ]]; then
-    echo "$PCNSSETTINGSFILE exists."
+    #echo "$PCNSSETTINGSFILE exists."
     cp "${PCNSSETTINGSFILE}" "${BAKFILE}"
     #powerfail event
     #enable command file
