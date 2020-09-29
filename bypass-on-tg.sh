@@ -1,2 +1,2 @@
 #!/bin/bash
-/opt/tg-notifier/telegram.sh -M "*Power Bypass* Alarm *ON*"
+/opt/ups-telegram-notifier/telegram.sh -M "*Power Bypass* Alarm *ON*"
