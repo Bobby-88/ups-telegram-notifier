@@ -32,6 +32,12 @@ BAKFILE=/opt/APC/PowerChute/group1/pcnsconfig.bak
 if [[ -f "$PCNSSETTINGSFILE" ]]; then
     echo "$PCNSSETTINGSFILE exists."
     cp "${PCNSSETTINGSFILE}" "${BAKFILE}"
+    #powerfail event
+    #enable command file
+    sed -ir "s/^[#]*\s*event_PowerFailed_enableCommandFile\ =\ .*/event_PowerFailed_enableCommandFile\ =\ true/" "${PCNSSETTINGSFILE}"
+    #set 3 sec delay to avoid flapping
+    sed -ir "s/^[#]*\s*event_PowerFailed_commandFileDelay\ =\ .*/event_PowerFailed_commandFileDelay\ =\ 3/" "${PCNSSETTINGSFILE}"
+    #set the script handler
     sed -ir "s/^[#]*\s*event_PowerFailed_commandFilePath\ =\ .*/event_PowerFailed_commandFilePath\ =\ \/opt\/ups-telegram-notifier\/power-down-tg.sh/" "${PCNSSETTINGSFILE}"
 fi
 
