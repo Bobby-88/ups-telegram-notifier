@@ -32,7 +32,7 @@ BAKFILE=/opt/APC/PowerChute/group1/pcnsconfig.bak
 if [[ -f "$PCNSSETTINGSFILE" ]]; then
     echo "$PCNSSETTINGSFILE exists."
     cp "${PCNSSETTINGSFILE}" "${BAKFILE}"
-    sed -ir "s/^[#]*\s*event_PowerFailed_commandFilePath\ =\ .*/event_PowerFailed_commandFilePath\ =\ \/opt\/ups-telegram-notifier\/power-down-tg.sh" "${PCNSSETTINGSFILE}"
+    sed -ir "s/^[#]*\s*event_PowerFailed_commandFilePath\ =\ .*/event_PowerFailed_commandFilePath\ =\ \/opt\/ups-telegram-notifier\/power-down-tg.sh/" "${PCNSSETTINGSFILE}"
 fi
 
 echo "Installation done"
