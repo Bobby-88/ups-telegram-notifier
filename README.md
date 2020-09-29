@@ -1,5 +1,15 @@
-# shell-tg-notifier
-to install, please use:
+# UPS Telegram Notifier
+
+UPS Telegram Notifier is a tool which will inform you once anything happens with your UPS.
+
+For example, if there is power failure - you will receive a notification in your telegram chat.
+
+Currently, this tool supports integration with:
+1. apcupsd (tested on UNRAID)
+2. PowerChute Network Shutdown
+
+# Installation
+To install, please use:
 
 ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Bobby-88/shell-tg-notifier/master/install.sh)"```
 
