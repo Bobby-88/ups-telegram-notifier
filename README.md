@@ -16,26 +16,22 @@ To install, please use:
 
 Currently, the following events are supported:
 
-1. onbattery
-	echo "Power failure on UPS ${2}. Running on batteries." | ${WALL}
+##### 1. ONBATTERY
+	This event occurs on a power outage on the main line, where UPS is coneected to
 
-2. offbattery)
-	echo "Power has returned on UPS ${2}..." | ${WALL}
-	wall "Mains power returned to UPS ${2}"
+##### 2. OFFBATTERY
+	This happens after ONBATTERY, when the mains return to normal condition
 
-3. commfailure
-	echo "Warning communications lost with UPS ${2}" | ${WALL}
+##### 3. COMMFAILURE
+	If you disconnect UPS from the server (apcupsd/powerchute)
 
-4. commok
-	echo "Communications restored with UPS ${2}" | ${WALL}
+##### 4. COMMOK
+	After the connectivity between server and UPS is restored
 
 
 
     failing)
 	echo "Battery power exhausted on UPS ${2}. Doing shutdown." | ${WALL}
-    ;;
-    timeout)
-	echo "Battery time limit exceeded on UPS ${2}. Doing shutdown." | ${WALL}
     ;;
     loadlimit)
 	echo "Remaining battery charge below limit on UPS ${2}. Doing shutdown." | ${WALL}
