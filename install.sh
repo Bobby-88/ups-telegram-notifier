@@ -1,4 +1,23 @@
 #!/bin/bash
+#constants
+PCNSSETTINGSFILE=/opt/APC/PowerChute/group1/pcnsconfig.ini
+BAKFILE=/opt/APC/PowerChute/group1/pcnsconfig.bak
+
+#try to detect environment
+UNRAID_KERNEL_CHECK="Unraid"
+UNRAID_APCCONTROL_FILE="/etc/apcupsd/apccontrol"
+# if kernel version and apccontrol files are present - we are running on unraid
+if [[ "$(uname -r | cut -d- -f2)" == "$UNRAID_KERNEL_CHECK" ]] && [[ -f "$UNRAID_APCCONTROL_FILE" ]]; then
+    echo "We seem to be on unraid system"
+else # 
+    
+    
+    
+    
+    echo "Strings are not equal"
+fi
+
+
 
 echo "please input telegram token, e.g. 123456:AbcDefGhi_JlkMno"
 read tg_token
@@ -27,8 +46,7 @@ chmod +x telegram.sh
 #curl -o bypass-on-tg.sh -fsSL https://raw.githubusercontent.com/Bobby-88/ups-telegram-notifier/master/bypass-on-tg.sh
 #chmod +x bypass-on-tg.sh
 #config file
-PCNSSETTINGSFILE=/opt/APC/PowerChute/group1/pcnsconfig.ini
-BAKFILE=/opt/APC/PowerChute/group1/pcnsconfig.bak
+
 if [[ -f "$PCNSSETTINGSFILE" ]]; then
     #echo "$PCNSSETTINGSFILE exists."
     cp "${PCNSSETTINGSFILE}" "${BAKFILE}"
@@ -40,6 +58,7 @@ if [[ -f "$PCNSSETTINGSFILE" ]]; then
     #set the script handler
     sed -ir "s/^[#]*\s*event_PowerFailed_commandFilePath\ =\ .*/event_PowerFailed_commandFilePath\ =\ \/opt\/ups-telegram-notifier\/power-down-tg.sh/" "${PCNSSETTINGSFILE}"
 fi
-
+#installation for unraid
+#sed -ir '/^.*Running\ on\ batteries\..*/a \\t\/opt\/ups-telegram-notifier\/power-down-tg.sh' apccontrol
 echo "Installation done"
 
