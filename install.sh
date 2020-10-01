@@ -2,14 +2,31 @@
 #constants
 PCNSSETTINGSFILE=/opt/APC/PowerChute/group1/pcnsconfig.ini
 BAKFILE=/opt/APC/PowerChute/group1/pcnsconfig.bak
+CURRENT_ENV=
 
 #try to detect environment
 UNRAID_KERNEL_CHECK="Unraid"
-UNRAID_APCCONTROL_FILE="/etc/apcupsd/apccontrol"
+APCCONTROL_FILE="/etc/apcupsd/apccontrol"
 # if kernel version and apccontrol files are present - we are running on unraid
-if [[ "$(uname -r | cut -d- -f2)" == "$UNRAID_KERNEL_CHECK" ]] && [[ -f "$UNRAID_APCCONTROL_FILE" ]]; then
-    echo "We seem to be on unraid system"
-else # 
+if [[ "$(uname -r | cut -d- -f2)" == "$UNRAID_KERNEL_CHECK" ]] && [[ -f "$APCCONTROL_FILE" ]]; then
+    echo "We've detected UNRAID"
+    CURRENT_ENV=UNRAID
+elif [[ -f "$PCNSSETTINGSFILE" ]]; then # check if we are on pcns
+    
+    echo "We've detected PowerChute Network Shutdown (PCNS)"
+    CURRENT_ENV=PCNS
+    cp "${PCNSSETTINGSFILE}" "${BAKFILE}"
+    #powerfail event
+    #enable command file
+    sed -ir "s/^[#]*\s*event_PowerFailed_enableCommandFile\ =\ .*/event_PowerFailed_enableCommandFile\ =\ true/" "${PCNSSETTINGSFILE}"
+    #set 3 sec delay to avoid flapping
+    sed -ir "s/^[#]*\s*event_PowerFailed_commandFileDelay\ =\ .*/event_PowerFailed_commandFileDelay\ =\ 3/" "${PCNSSETTINGSFILE}"
+    #set the script handler
+    sed -ir "s/^[#]*\s*event_PowerFailed_commandFilePath\ =\ .*/event_PowerFailed_commandFilePath\ =\ \/opt\/ups-telegram-notifier\/power-down-tg.sh/" "${PCNSSETTINGSFILE}"
+elif [[ -f "$UNRAID_APCCONTROL_FILE" ]]; then
+    echo "We've detected Generic APCUPSD"
+    CURRENT_ENV=APCUPSD
+fi
     
     
     
@@ -47,17 +64,7 @@ chmod +x telegram.sh
 #chmod +x bypass-on-tg.sh
 #config file
 
-if [[ -f "$PCNSSETTINGSFILE" ]]; then
-    #echo "$PCNSSETTINGSFILE exists."
-    cp "${PCNSSETTINGSFILE}" "${BAKFILE}"
-    #powerfail event
-    #enable command file
-    sed -ir "s/^[#]*\s*event_PowerFailed_enableCommandFile\ =\ .*/event_PowerFailed_enableCommandFile\ =\ true/" "${PCNSSETTINGSFILE}"
-    #set 3 sec delay to avoid flapping
-    sed -ir "s/^[#]*\s*event_PowerFailed_commandFileDelay\ =\ .*/event_PowerFailed_commandFileDelay\ =\ 3/" "${PCNSSETTINGSFILE}"
-    #set the script handler
-    sed -ir "s/^[#]*\s*event_PowerFailed_commandFilePath\ =\ .*/event_PowerFailed_commandFilePath\ =\ \/opt\/ups-telegram-notifier\/power-down-tg.sh/" "${PCNSSETTINGSFILE}"
-fi
+
 #installation for unraid
 #sed -ir '/^.*Running\ on\ batteries\..*/a \\t\/opt\/ups-telegram-notifier\/power-down-tg.sh' apccontrol
 echo "Installation done"
