@@ -27,12 +27,6 @@ elif [[ -f "$UNRAID_APCCONTROL_FILE" ]]; then
     echo "We've detected Generic APCUPSD"
     CURRENT_ENV=APCUPSD
 fi
-    
-    
-    
-    
-    echo "Strings are not equal"
-fi
 
 
 
